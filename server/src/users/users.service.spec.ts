@@ -296,7 +296,7 @@ describe("UsersService", () => {
       expect(response).toEqual({ ...newUser, id: "1" });
     });
     it("should throw an error 'User not found' while updating", async () => {
-      await expect(service.deleteOne("")).rejects.toEqual(
+      await expect(service.update("", {})).rejects.toEqual(
         new NotFoundException({
           message: "User not found",
         }),
