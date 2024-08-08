@@ -10,6 +10,7 @@ export function createMockUsers(): UserDto[] {
       weight: 111,
       address: "User 1 address",
       photo: "https://user1photo.com",
+      createdAt: new Date(),
     },
     {
       id: "2",
@@ -19,6 +20,7 @@ export function createMockUsers(): UserDto[] {
       weight: 222,
       address: "User 2 address",
       photo: "https://user2photo.com",
+      createdAt: new Date(),
     },
     ,
     {
@@ -29,6 +31,7 @@ export function createMockUsers(): UserDto[] {
       weight: 333,
       address: "User 3 address",
       photo: "https://user3photo.com",
+      createdAt: new Date(),
     },
   ];
 

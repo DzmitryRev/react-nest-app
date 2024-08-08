@@ -14,6 +14,7 @@ describe("UsersService", () => {
   let prisma: PrismaService;
   let users: UserDto[];
   let oneUser: UserDto;
+  const CREATION_DATE = new Date(2024, 7, 4);
 
   beforeEach(async () => {
     users = createMockUsers();
@@ -53,7 +54,11 @@ describe("UsersService", () => {
                 .fn()
                 .mockImplementation(
                   ({ data }: { data: CreateUserDto }): UserDto => {
-                    let newUser = { ...data, id: "4" };
+                    let newUser = {
+                      ...data,
+                      id: "4",
+                      createdAt: CREATION_DATE,
+                    };
                     users.push(newUser);
                     return newUser;
                   },
@@ -219,6 +224,7 @@ describe("UsersService", () => {
     });
     it("should throw an isUrl validation errors for 'photo' field", async () => {
       let newUser = new UserDto();
+      newUser.photo = "not url";
       let validationErrors: ValidationError[] = await validate(newUser);
       let idValidationError: ValidationError = validationErrors.find(
         (error: ValidationError) => error.property === "photo",
@@ -236,9 +242,17 @@ describe("UsersService", () => {
       newUser.weight = 10;
       newUser.address = "Vitebsk";
       newUser.photo = "https://newuserphoto.com";
-      const response = await service.create(newUser);
-      expect(users.filter((user) => user.id === "4")[0]).toEqual(response);
-      expect(response).toEqual({ ...newUser, id: "4" });
+      let response = await service.create(newUser);
+      expect(users.filter((user) => user.id === "4")[0]).toEqual({
+        ...response,
+        id: "4",
+        createdAt: CREATION_DATE,
+      });
+      expect(response).toEqual({
+        ...newUser,
+        id: "4",
+        createdAt: CREATION_DATE,
+      });
     });
   });
 
@@ -251,9 +265,18 @@ describe("UsersService", () => {
       newUser.weight = 11;
       newUser.address = "Minsk";
       newUser.photo = "https://updateduserphoto.com";
-      const response = await service.update("1", newUser);
-      expect(users.filter((user) => user.id === "1")[0]).toEqual(response);
-      expect(response).toEqual({ ...newUser, id: "1" });
+      let { createdAt, ...body } = await service.update("1", newUser);
+      let userInDB = users.filter((user) => user.id === "1")[0];
+      expect(userInDB.firstName).toEqual(body.firstName);
+      expect(userInDB.lastName).toEqual(body.lastName);
+      expect(userInDB.height).toEqual(body.height);
+      expect(userInDB.weight).toEqual(body.weight);
+      expect(userInDB.address).toEqual(body.address);
+      expect(userInDB.photo).toEqual(body.photo);
+      expect(body).toEqual({
+        ...newUser,
+        id: "1",
+      });
     });
     it("should throw an error 'User not found' while updating", async () => {
       await expect(service.update("", {})).rejects.toEqual(

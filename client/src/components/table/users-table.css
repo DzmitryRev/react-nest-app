@@ -1,0 +1,24 @@
+.users-table {
+    font-size: 1em;
+    font-weight: 500;
+}
+
+.users-table__row {
+    display: flex;
+    justify-content: space-around;
+    padding: 0.5em 0.2em;
+    border-bottom: 1px solid rgb(197, 212, 226);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.users-table__row:hover {
+    background-color: #cacaed;
+}
+.users-table > .users-table__row:first-of-type {
+    border-top: 1px solid rgb(197, 212, 226);
+}
+.users-table__row > p {
+    flex: 0 1 220px;
+}

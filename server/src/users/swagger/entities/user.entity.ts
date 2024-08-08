@@ -22,4 +22,6 @@ export class UserEntity implements User {
 
   @ApiProperty({ required: false })
   photo: string;
+
+  createdAt: Date;
 }

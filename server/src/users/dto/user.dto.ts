@@ -6,6 +6,9 @@ import {
   IsNotEmpty,
   MaxLength,
   IsUUID,
+  IsDefined,
+  ValidateIf,
+  IsDate,
 } from "class-validator";
 
 export class UserDto {
@@ -36,8 +39,11 @@ export class UserDto {
   @IsString()
   address: string;
 
+  @ValidateIf((user) => user.photo !== "")
   @IsString()
-  @IsOptional()
   @IsUrl()
   photo?: string = "";
+
+  @IsDate()
+  createdAt: Date;
 }

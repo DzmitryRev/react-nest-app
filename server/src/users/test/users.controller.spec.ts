@@ -13,6 +13,7 @@ describe("Users Controller", () => {
   let controller: UsersController;
   let service: UsersService;
   let users: UserDto[];
+  const CREATION_DATE = new Date(2024, 7, 4);
 
   beforeEach(async () => {
     users = createMockUsers();
@@ -47,6 +48,7 @@ describe("Users Controller", () => {
                   ...createUserDto,
                   id: "4",
                   photo: createUserDto.photo || "",
+                  createdAt: CREATION_DATE,
                 });
                 return users.filter((user) => user.id === "4")[0];
               }),
@@ -134,7 +136,11 @@ describe("Users Controller", () => {
         address: "New User",
         photo: "https://newuser.com",
       };
-      expect(await controller.create(newUser)).toEqual({ ...newUser, id: "4" });
+      expect(await controller.create(newUser)).toEqual({
+        ...newUser,
+        id: "4",
+        createdAt: CREATION_DATE,
+      });
       let createdUser = users.filter((user) => user.id === "4")[0];
       expect(createdUser.photo).not.toBe("");
       expect(isURL(createdUser.photo)).toBeTruthy();
@@ -151,6 +157,7 @@ describe("Users Controller", () => {
         ...newUser,
         id: "4",
         photo: "",
+        createdAt: CREATION_DATE,
       });
       let createdUser = users.filter((user) => user.id === "4")[0];
       expect(createdUser.photo).toBe("");
@@ -166,7 +173,8 @@ describe("Users Controller", () => {
         address: "Updated User",
         photo: "https://updated.com",
       };
-      expect(await controller.update("1", newUser)).toEqual({
+      let { createdAt, ...body } = await controller.update("1", newUser);
+      expect(body).toEqual({
         ...newUser,
         id: "1",
       });
@@ -188,7 +196,8 @@ describe("Users Controller", () => {
   });
   describe("delete", () => {
     it("should delete user and return them", async () => {
-      expect(await controller.deleteOne("1")).toEqual({
+      let { createdAt, ...body } = await controller.deleteOne("1");
+      expect(body).toEqual({
         id: "1",
         firstName: "User 1 firstName",
         lastName: "User 1 lastName",

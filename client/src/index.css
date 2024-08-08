@@ -1,0 +1,85 @@
+@import "@uploadcare/react-uploader/core.css";
+@import url(./components/ui/button/button.css);
+@import url(./components/ui/modal/modal.css);
+@import url(./components/create-user-form/create-user-form.css);
+@import url(./components/pagination/pagination.css);
+@import url(./components/table/users-table.css);
+
+#root {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+*,
+*::after,
+::before {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    max-width: 1280px;
+    margin: 0 auto;
+    line-height: 1.5;
+    padding: 0 calc(20px - (100vw - 100%)) 0 0;
+    background-color: #ededf1;
+}
+
+h1 {
+    font-size: 3.2em;
+    line-height: 1.1;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+.users-page-container {
+    position: relative;
+    padding: 2em 0;
+    min-height: 100vh;
+}
+
+.users-page-container__loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 42px;
+    height: 10px;
+    margin-top: -5px;
+    margin-left: -18px;
+}
+
+.users-table-container {
+    max-width: 660px;
+    margin: 0 auto;
+}
+
+.users-table-container__header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+}
+
+.users-table-container__footer {
+    padding: 10px;
+}
+
+.create-user-btn {
+    position: fixed;
+    bottom: 15px;
+    right: 10px;
+}
+
+input {
+    padding: 0.3em 1em;
+    border-radius: 8px;
+    border: 1px solid #8f94ff;
+    background-color: #ededf1;
+    font-size: 1em;
+    font-weight: 500;
+    font-family: inherit;
+    transition: border-color 0.25s;
+}

@@ -1,0 +1,29 @@
+.button {
+    padding: 0.6em 1.2em;
+    border: 1px solid #8f94ff;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1em;
+    font-weight: 500;
+    background-color: #e0e0f1;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.button:hover {
+    border-color: #747bfb;
+    background-color: #cacaed;
+}
+.button:focus,
+.button:focus-visible {
+    outline: 4px auto -webkit-focus-ring-color;
+}
+
+.btn_pagination {
+    width: 40px;
+    height: 40px;
+    margin: 0 5px;
+    padding: 0;
+    border-radius: 50%;
+    font-size: 1.1em;
+}

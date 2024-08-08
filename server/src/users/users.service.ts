@@ -13,7 +13,9 @@ export class UsersService {
   constructor(private prisma?: PrismaService) {}
 
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
-    return this.prisma.user.create({ data: createUserDto });
+    return this.prisma.user.create({
+      data: { ...createUserDto, createdAt: new Date() },
+    });
   }
 
   async getAll(
@@ -24,6 +26,7 @@ export class UsersService {
     let users = await this.prisma.user.findMany({
       skip: (page - 1) * usersPerPage,
       take: usersPerPage,
+      orderBy: { createdAt: "desc" },
     });
     let totalPages = Math.ceil((await this.prisma.user.count()) / usersPerPage);
     return {
